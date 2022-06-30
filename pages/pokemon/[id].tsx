@@ -18,6 +18,9 @@ const PokemonPage: NextPage<Props> = ({id,name}) => {
   )
 }
 
+/**
+ * Define las rutas estaticas
+ */
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   return {
     paths: [
