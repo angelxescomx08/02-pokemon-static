@@ -1,8 +1,9 @@
-
+import { useState } from "react";
 
 import { Button, Card, Container, Grid, Text, Image } from "@nextui-org/react";
 import { GetStaticProps, NextPage, GetStaticPaths } from "next";
-import { useState } from "react";
+
+import { realistic } from "../../utils";
 
 import { pokeApi } from "../../api";
 import { Layout } from "../../components/layouts"
@@ -20,6 +21,10 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
   const onToggleFavorite = () =>{
     localFavorites.onToggleFavorite(pokemon.id);
     setIsInFavorites(!isInFavorites);
+
+    if(isInFavorites) return;
+
+    realistic();
   }
 
   return (
