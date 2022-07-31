@@ -16,13 +16,13 @@ interface Props {
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
-  const [isInFavorites,setIsInFavorites] = useState(localFavorites.existInFavorites(pokemon.id));
+  const [isInFavorites, setIsInFavorites] = useState(localFavorites.existInFavorites(pokemon.id));
 
-  const onToggleFavorite = () =>{
+  const onToggleFavorite = () => {
     localFavorites.onToggleFavorite(pokemon.id);
     setIsInFavorites(!isInFavorites);
 
-    if(isInFavorites) return;
+    if (isInFavorites) return;
 
     realistic();
   }
@@ -107,11 +107,15 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id } = params as { id: string };
-  
+
   return {
     props: {
       pokemon: await getPokemonInfo(id)
-    }
+    },
+    /**
+     * Incremental Static Regeneration (ISR): añadir revalidate con un número dado en segundos
+     */
+    revalidate: 86400 //60 * 60 * 24
   }
 }
 

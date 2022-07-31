@@ -114,7 +114,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       pokemon: await getPokemonInfo(name)
-    }
+    },
+    /**
+     * Incremental Static Regeneration (ISR): añadir revalidate con un número dado en segundos
+     */
+    revalidate: 86400 //60 * 60 * 24
   }
 }
 
