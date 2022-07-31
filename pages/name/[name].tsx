@@ -103,7 +103,7 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
       }
     }))
     ,
-    fallback: false
+    fallback: "blocking"
   }
 }
 
@@ -111,9 +111,20 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
 
+  const pokemon = await getPokemonInfo(name);
+
+  if(!pokemon){
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
   return {
     props: {
-      pokemon: await getPokemonInfo(name)
+      pokemon
     },
     /**
      * Incremental Static Regeneration (ISR): añadir revalidate con un número dado en segundos
